@@ -1,6 +1,6 @@
 Methods:
 push() = Add element in the Array in the end.
-
+trim() = Remove white spaces
 
 -----------Add Elements in the Array--------------
 var arr = [];
