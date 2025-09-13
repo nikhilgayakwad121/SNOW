@@ -1,41 +1,42 @@
-Methods: 
-1, length: x.length();
-2, slice : x.slice(start, end); -ve parameter work
-3, substring: x.substring(12); -ve parameter may not work
-4, replace: x.replace(‘I am’, ‘we are’); /g  to check the match
-5, toUpperCase(): x.toLowerCase();
-6, toLowerCase(): x.toUpperCase();
-7, trim: s.trim(); remove spaces
-8, split: str.split(‘ ’); //Any word that have it will get replace with comma
-9, indexOf: x.indexOf(‘help’) find the first occurrence 
-10, lastIndexOf: x.lastIndexOf(‘help’);
-11, push: 
-12, pop:
-13, sort:
-14, search: x.search(‘string’); //will search for string for string
-15, match: x.match(‘ string’); //this method return an array cotaining that match
-16, includes: x.includes(‘help’); returns true/false
-17, toString(): x.toString(); //convert no into string
-18,       
+1. length         → x.length();
+2. slice          → x.slice(start, end); // negative index works
+3. substring      → x.substring(12);     // negative index may not work
+4. replace        → x.replace('I am', 'we are'); // use /g for global match
+5. toUpperCase    → x.toUpperCase();
+6. toLowerCase    → x.toLowerCase();
+7. trim           → s.trim(); // removes spaces
+8. split          → str.split(' '); // splits into array
+9. indexOf        → x.indexOf('help'); // first occurrence
+10. lastIndexOf   → x.lastIndexOf('help');
+11. push          → arr.push(item);
+12. pop           → arr.pop();
+13. sort          → arr.sort();
+14. search        → x.search('string');
+15. match         → x.match('string'); // returns array of matches
+16. includes      → x.includes('help'); // returns true/false
+17. toString      → num.toString();
 
-Operators:
-!=
-= Field must be equal to value supplied.
-> Field must be greater than value supplied
-< Field must be less than value supplied
->= Field must be equal or greater than value supplied
-<= Field must be equal or less than value supplied.
-STARTSWITH addQuery('short_description', 'STARTSWITH', 'Error');
-CONTAINS addQuery('short_description', 'CONTAINS', 'Error');
-IN addQuery('short_description', 'IN', 'Error,Success,Failure'
-ENDSWITH addQuery('short_description', 'ENDSWITH', 'Error');
+Operators
+!=      Not equal
+=       Equal
+>       Greater than
+<       Less than
+>=      Greater or equal
+<=      Less or equal
+
+Query Operators
+STARTSWITH   addQuery('short_description', 'STARTSWITH', 'Error');
+CONTAINS     addQuery('short_description', 'CONTAINS', 'Error');
+IN           addQuery('short_description', 'IN', 'Error,Success,Failure');
+ENDSWITH     addQuery('short_description', 'ENDSWITH', 'Error');
 DOES NOT CONTAIN addQuery('short_description', 'DOES NOT CONTAIN', 'Error');
-NOT IN addQuery('short_description', 'NOT IN', 'Error,Success,Failure');
-INSTANCEOF addQuery('sys_class_name', 'INSTANCEOF', 'cmdb_ci_computer');
-________________________________________
-Accesing object:
-current – The current record being processed (read/write).
-previous – The values of the record before it was updated (read-only).
+NOT IN       addQuery('short_description', 'NOT IN', 'Error,Success,Failure');
+INSTANCEOF   addQuery('sys_class_name', 'INSTANCEOF', 'cmdb_ci_computer');
+
+
+Accessing Objects
+current → The current record being processed (read/write).
+previous → The values of the record before update (read-only).
 ________________________________________
 GlideRecord:
 toString() Converts the value to a string.
