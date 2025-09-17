@@ -124,8 +124,11 @@ var gr = new GlideRecord(‘incident’);
 gr.addQuery(sys_updated_on);
 gr,addQuery(‘assigned_to’,gs. getUserID);
 gr.setLimit(1);
-
-
+gr.query();
+if(gr.next())
+{
+    gs.print(gr.number);
+}
 
 ---------------------Close the incident which are resolved in last 7 days--------------------
 var gr = new GlideRecord(‘incident’);
@@ -347,23 +350,12 @@ current.priority = previous.priority;
 }
 
 
-
----------------------Prevent users from changing the priority field manually
-//When to Run: before Update, Table: incident
-if (current.priority != previous.priority) {
-gs.addErrorMessage("Priority cannot be changed manually.");
-current.priority = previous.priority;
-}
-
-
-
 -------------------write a business rule for incident table that if an user is having ITIL role,then he can see all the inactive incidents.
 //When to run->Before, Query BR Advanced
 if (gs.hasRole('itil'))
 {
    current.addQuery('active', true);   // For non-ITIL users, limit to only active incidents
 } 
-
 
 
 ---------------------Write a background script to resolve all low-priority incidents that are in the InProgress state,
