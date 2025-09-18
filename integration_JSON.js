@@ -1,3 +1,58 @@
+(function() {
+    try {
+        // Create REST MessageV2 object
+        var r = new sn_ws.RESTMessageV2();
+        r.setHttpMethod("GET");
+        r.setEndpoint("https://reqres.in/api/users?page=2");
+
+        // Execute request
+        var response = r.execute();
+        var responseBody = response.getBody();
+        var httpStatus = response.getStatusCode();
+
+        gs.info("HTTP Status: " + httpStatus);
+
+        if (httpStatus == 200) {
+            var parsed = JSON.parse(responseBody);
+
+            // Assuming your custom table is u_users
+            // Fields: u_id, u_email, u_first_name, u_last_name, u_avatar
+
+            parsed.data.forEach(function(user) {
+                var gr = new GlideRecord("u_users");
+                gr.addQuery("u_id", user.id); // prevent duplicates
+                gr.query();
+
+                if (gr.next()) {
+                    // Update existing record
+                    gr.u_email = user.email;
+                    gr.u_first_name = user.first_name;
+                    gr.u_last_name = user.last_name;
+                    gr.u_avatar = user.avatar;
+                    gr.update();
+                    gs.info("Updated user: " + user.id);
+                } else {
+                    // Insert new record
+                    gr.initialize();
+                    gr.u_id = user.id;
+                    gr.u_email = user.email;
+                    gr.u_first_name = user.first_name;
+                    gr.u_last_name = user.last_name;
+                    gr.u_avatar = user.avatar;
+                    gr.insert();
+                    gs.info("Inserted new user: " + user.id);
+                }
+            });
+        } else {
+            gs.error("Failed to fetch API data. Status: " + httpStatus);
+        }
+    } catch (ex) {
+        gs.error("Error: " + ex.message);
+    }
+})();
+
+
+
 // INEGRATION: Send Attachment from one instance and another.
 Rest API Explorer to get API endpoint from target instance
 In Rest message: API Endpoint, Authentication, Http Query parameter, {resquest body : “sys_id: ${sys_id}”}
