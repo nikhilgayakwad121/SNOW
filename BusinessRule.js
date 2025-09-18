@@ -1,5 +1,5 @@
-------Display Bussiness Rule----------
-//Manager email of the user who created the incident on the form.
+//Display Bussiness Rule----------
+```Manager email of the user who created the incident on the form```
 (function executeRule(current, previous){
   if(current.caller_id.manager.email)
     g_scratchpad.manager_email = current.caller_id.manager.email;
@@ -10,8 +10,8 @@
 
 
 
------Before bussiness Rule------------
-//Prevent Assignment to inactive Users
+//Before bussiness Rule------------
+```Prevent Assignment to inactive Users```
 (function executeRule(current, previous){
 if(current.assigned_to){
   var gr = new GlideRecord('sys_user');
@@ -22,8 +22,8 @@ if(current.assigned_to){
 })(current, previous);
 
 
------------After business Rule-----------------------
-//Automatically update work notes of child incident when parent incident record update
+//After business Rule-----------------------
+```Automatically update work notes of child incident when parent incident record update```
 (function executeRule(current, previous){
 var newWorkNote = current.work_notes.getJournalEntry(1);
 if(!newWorkNote){
@@ -40,8 +40,8 @@ while(childIncident.next()){
 
 
 
-------------Async Business Rule------------
-//When parent incident is closed, Automatically close all the related child incident
+//Async Business Rule------------
+```When parent incident is closed, Automatically close all the related child incident```
 (function executeRule(current, previous){
 var childIncident = new GlideRecord('incident');
 childIncident.addQuery('parent_incident', current.sys_id);
@@ -56,8 +56,8 @@ while(childIncident.next())
 
 
 
--------------Query Business Rule----------
-//Non admin user should only see  active incident records,
+//Query Business Rule-----------
+```Non admin user should only see  active incident records```
 (function executeRule(current, previous){
 if(!gs.hasRole('admin'))
 {
@@ -66,7 +66,21 @@ if(!gs.hasRole('admin'))
 })(current, previous);
 
 
--------Automatically update the Incident record’s Work Notes whenever its related Problem record is updated
+```Write a Business Rule (or Script Include) that automatically updates the Short Description of an Incident record to prepend the word "URGENT:" if the Priority is set```
+(function executeRule(current, previous /*null when async*/) {
+
+    // Check if Priority is not empty
+    if (!gs.nil(current.priority)) {
+        
+        // Only prepend "URGENT:" if it's not already at the beginning
+        if (current.short_description.indexOf("URGENT:") !== 0) {
+            current.short_description = "URGENT: " + current.short_description;
+        }
+    }
+
+})(current, previous);
+
+```Automatically update the Incident record’s Work Notes whenever its related Problem record is updated```
 //Table: incident, After Update
 (function executeRule(current, previous){
 var childInc = new GlideRecord('incident');
