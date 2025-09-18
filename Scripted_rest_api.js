@@ -2,18 +2,11 @@
 https://<instance.service-now.com>/api/<name_space>/<version>/<api_id>/<relative_path>
 https://dev7109.servicenow.com/api/34257/applicationintegration/insert_update_incident 
 
-Scenario-1: A client shares a requirement to capture alerts generated from a monitoring 
-tool (Solarwinds, Prometheus, Datadog etc ) and create an incident for it on ServiceNow
-
-Scenario-2: To make it a little complex, it is required to create an incident when the 
-status is “DOWN” for any CI and resolve the incident when the status is “UP” for the same CI
-
-Scenario-3: It is again required to assign that particular incident to a specific user and 
-make sure that for the same CI, multiple incidents do not get generated even after multiple 
-alerts from the monitoring tool
-
-Propose Solution: Only Scenario-1 can be achieved by REST API explorer and here comes Scripted
- REST API in picture which can handle complexities defined in Scenario-2 & 3.```
+Scenario 1: Can be handled via ServiceNow REST API Explorer by directly creating incidents from monitoring tool alerts.
+Scenario 2 & 3: Require Scripted REST API to add logic for CI state validation (DOWN → create, UP → resolve), assignment
+to specific users, and deduplication to avoid multiple incidents for the same CI.
+👉 REST API Explorer = basic integration.
+👉 Scripted REST API = advanced logic + control.```
 
 SCRIPTED REST API SCRIPT:-
 (function process( /*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
